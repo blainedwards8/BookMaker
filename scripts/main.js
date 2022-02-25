@@ -47,7 +47,7 @@ const app = new Vue({
             return {width: parseFloat(this.block_thickness), height: parseFloat(this.height) + 0.25};
         },
         wrap_dimensions () {
-            const width = (this.gap * 2 + this.board_dims.width * 2 + this.offset * 2 + this.spine_dims.width);
+            const width = (this.gap * 2 + this.board_dims.width * 2 + parseFloat(this.offset) * 2 + this.spine_dims.width);
             const height = (this.board_dims.height + this.gap * 2);
 
             return {width, height};
@@ -60,21 +60,34 @@ const app = new Vue({
             return box;
         },
         b2 () {
-            const x = (this.gap + this.board_dims.width + this.offset * 2 + this.spine_dims.width);
+            const x = (this.gap + this.board_dims.width + parseFloat(this.offset) * 2 + this.spine_dims.width);
             const y = this.gap;
             let box = new Box([x,y], this.board_dims.width, this.board_dims.height);
             box.layer = "blue";
             return box;
         },
         spine () {
-            const x = (this.gap + this.board_dims.width + this.offset);
+            const x = (this.gap + this.board_dims.width + parseFloat(this.offset));
             const y = this.gap;
             let box = new Box([x, y], this.spine_dims.width, this.spine_dims.height);
             box.layer = "blue";
             return box;
         },
         wrap () {
-            let box = new Box([0,0],this.wrap_dimensions.width,this.wrap_dimensions.height);
+            //let box = new Box([0,0],this.wrap_dimensions.width,this.wrap_dimensions.height);
+            const {width, height} = this.wrap_dimensions;
+            let box = {
+                paths: {
+                    line1: new makerjs.paths.Line([0.75,0],[width - 0.75,0]),
+                    line2: new makerjs.paths.Line([width - 0.75,0], [width, 0.75]),
+                    line3: new makerjs.paths.Line([width,0.75],[width, height - 0.75]),
+                    line4: new makerjs.paths.Line([width, height - 0.75], [width-0.75, height]),
+                    line5: new makerjs.paths.Line([width-0.75, height], [0.75, height]),
+                    line6: new makerjs.paths.Line([0.75, height], [0, height-0.75]),
+                    line7: new makerjs.paths.Line([0, height-0.75], [0,0.75]),
+                    line8: new makerjs.paths.Line([0,0.75],[0.75,0])
+                }
+            }
             box.layer = "red";
             return box;
         },
