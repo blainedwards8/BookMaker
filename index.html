@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Covers</title>
+    <link rel="stylesheet" href="https://unpkg.com/wingcss"/>
+    <script src="https://maker.js.org/target/js/browser.maker.js" type="text/javascript"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+</head>
+<body>
+    <div id="app">
+        <div id="wrapper" class="row">
+            <div id="controls" class="col-2">
+                <div class="card">
+                    <div class="card-header"> <h3>Book Properties</h3></div>
+                    <div class="card-body">
+                        <p>
+                            <b>Page Width:</b>
+                            <input type="text" v-model="width" />
+                        </p>
+
+                        <p>
+                            <b>Page Height:</b>
+                            <input type="text" v-model="height" />
+                        </p>
+
+                        <p>
+                            <b>Paper Type:</b>
+                            <select v-model="paper_type">
+                                <option v-for="type in paper_types" :key="type">{{type}}</option>
+                            </select>
+                        </p>
+
+                        <p>
+                            <b># of Pages:</b>
+                            <input type="text" v-model="pages" />
+                        </p>
+
+                        <p>
+                            <b>Cover Type</b>
+                            <select v-model="cover_material">
+                                <option>Book Cloth</option>
+                                <option>Faux Leather</option>
+                                <option>Leather</option>
+                            </select>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div id="display" class="col-8">
+                <div class="card" style="margin-left:50px;">
+                    <div class="card-header">
+                        <h3>Results</h3>
+                    </div>
+                    <div class="card-body">
+                        <div id="placeholder" v-html="drawing"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-2">
+                <input type="button" @click="download()" value="Download SVG"/>
+                <p>
+                    <p>Sheets: {{sheets}}</p>
+                    <p>Block Thickness: {{block_thickness}} inches</p>
+                    <p>Board Dimensions: 
+                        <ul>
+                            <li>{{board_dims.width}} inches</li>
+                            <li>{{board_dims.height}} inches</li>
+                        </ul>
+                    </p>
+                    <p>Spine Dimensions:
+                        <ul>
+                            <li>{{spine_dims.width}} inches</li>
+                            <li>{{spine_dims.height}} inches</li>
+                        </ul>
+                    </p>
+                    <p>Wrap Dimensions:
+                        <ul>
+                            <li>{{wrap_dimensions.width % 0.125 + wrap_dimensions.width}} inches</li>
+                            <li>{{wrap_dimensions.height}} inches</li>
+                        </ul>
+                    </p>
+                </p>
+            </div>
+        </div>
+    </div>
+    <script src="./scripts/main.js"></script>
+</body>
+</html>
